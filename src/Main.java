@@ -50,7 +50,7 @@ public class Main {
 
     public static int[] porcentajeAprobados(int[][] matrix) {
 
-        int[] porcentajeAprobados = new int[matrix[0].length];
+        int[] porcentajeAprobados = new int[matrix.length];
         int contador = 0;
 
         for (int i = 0; i < matrix.length; i++) {
