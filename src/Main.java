@@ -15,6 +15,7 @@ public class Main {
         System.out.println(Arrays.toString(notaMediaAlumnos(notas)));
         System.out.println(Arrays.toString(notaMediaAsignaturas(notas)));
         System.out.println(Arrays.toString(porcentajeAprobados(notas)));
+        System.out.println(Arrays.deepToString(ordenSegunMedia(notas)));
     }
 
     //1
@@ -50,11 +51,11 @@ public class Main {
 
     public static int[] porcentajeAprobados(int[][] matrix) {
 
-        int[] porcentajeAprobados = new int[matrix.length];
+        int[] porcentajeAprobados = new int[matrix[0].length];
         int contador = 0;
 
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[0].length; j++) {
+        for (int i = 0; i < matrix[0].length; i++) {
+            for (int j = 0; j < matrix.length; j++) {
                 if (matrix[j][i] >= 5) {
                     contador++;
                 }
@@ -63,5 +64,35 @@ public class Main {
             contador = 0;
         }
         return porcentajeAprobados;
+    }
+
+    public static int[][] ordenSegunMedia(int[][] matrix) {
+
+        int[] sumas = new int[matrix.length];
+
+        for (int i = 0; i < matrix.length; i++) {
+        int suma = 0;
+            for (int j = 0; j < matrix[i].length; j++) {
+                suma += matrix[i][j];
+            }
+            sumas[i] = suma;
+        }
+
+        //ORDENACION BURBUJA
+        for (int i = 0; i < sumas.length - 1; i++) {
+            for (int j = 0; j < sumas.length - i - 1; j++) {
+                if (sumas[j] > sumas[j + 1]) {
+
+                    int tempSuma = sumas[j];
+                    sumas[j] = sumas[j + 1];
+                    sumas[j + 1] = tempSuma;
+
+                    int[] tempFila = matrix[j];
+                    matrix[j] = matrix[j + 1];
+                    matrix[j + 1] = tempFila;
+                }
+            }
+        }
+        return matrix;
     }
 }
