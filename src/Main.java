@@ -14,11 +14,27 @@ public class Main {
 
         System.out.println(Arrays.toString(notaMediaAlumnos(notas)));
         System.out.println(Arrays.toString(notaMediaAsignaturas(notas)));
-        System.out.println(Arrays.toString(porcentajeAprobados(notas)));
-        System.out.println(Arrays.deepToString(ordenSegunMedia(notas)));
-    }
 
-    //1
+        int[][] printTable = ordenSegunMedia(notas);
+        for (int[] ints : printTable) {
+            for (int anInt : ints) {
+                System.out.print(anInt + " ");
+            }
+            System.out.println();
+        }
+
+        System.out.println(Arrays.deepToString(mejoresAlumnosPorAsignatura(notas)));
+
+        int[][] mejoresAlumnosPorAsignatura = mejoresAlumnosPorAsignatura(notas);
+
+        for (int i = 0; i < mejoresAlumnosPorAsignatura.length; i++) {
+            int alumno = mejoresAlumnosPorAsignatura[i][0];
+            int nota = mejoresAlumnosPorAsignatura[i][1];
+            System.out.println("Asignatura " + i + ": Alumno " + alumno + " con nota " + nota);
+        }
+
+    }
+    
     public static int[] notaMediaAlumnos(int[][] matrix) {
 
         int[] notaMediaAlumnos = new int[matrix.length];
@@ -71,7 +87,7 @@ public class Main {
         int[] sumas = new int[matrix.length];
 
         for (int i = 0; i < matrix.length; i++) {
-        int suma = 0;
+            int suma = 0;
             for (int j = 0; j < matrix[i].length; j++) {
                 suma += matrix[i][j];
             }
@@ -94,5 +110,26 @@ public class Main {
             }
         }
         return matrix;
+    }
+
+    public static int[][] mejoresAlumnosPorAsignatura(int[][] matrix) {
+
+        int numAsignaturas = matrix[0].length;
+        int[][] resultado = new int[numAsignaturas][2]; // [asignatura][mejor_alumno, nota]
+
+        for (int i = 0; i < numAsignaturas; i++) {
+            int mejorNota = -1;
+            int mejorAlumno = -1;
+
+            for (int j = 0; j < matrix.length; j++) {
+                if (matrix[j][i] > mejorNota) {
+                    mejorNota = matrix[j][i];
+                    mejorAlumno = j;
+                }
+            }
+            resultado[i][0] = mejorAlumno;
+            resultado[i][1] = mejorNota;
+        }
+        return resultado;
     }
 }
